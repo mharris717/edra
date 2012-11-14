@@ -4,7 +4,9 @@ module EDRA
     attr_accessor :name, :type
     
     def ember_type
-      if type =~ /varchar/i
+      if %w(string date number).include?(type)
+        type
+      elsif type =~ /varchar/i
         "string"
       elsif type =~ /character/i
         "string"
@@ -12,8 +14,10 @@ module EDRA
         "number"
       elsif type == 'integer'
         "number"
+      elsif type == 'datetime'
+        "string"
       else
-        type
+        raise "unknown type #{type}"
       end
     end
     
@@ -22,3 +26,4 @@ module EDRA
     end
   end
 end
+
