@@ -19,7 +19,7 @@ describe "Model" do
 App.Book = DS.Model.extend({
   title: DS.attr('string'),
   author: DS.attr('string'),
-  yearPublished: DS.attr('number')
+  year_published: DS.attr('number')
 });".strip
     end
     
@@ -50,8 +50,8 @@ App.Book = DS.Model.extend({
       model.to_ember.should == "
 App.Book = DS.Model.extend({
   title: DS.attr('string'),
-  authorId: DS.attr('number'),
-  yearPublished: DS.attr('number'),
+  author_id: DS.attr('number'),
+  year_published: DS.attr('number'),
   author: DS.belongsTo('App.Author')
 });".strip
     end

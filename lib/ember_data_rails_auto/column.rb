@@ -22,7 +22,7 @@ module EDRA
     end
     
     def to_ember
-      "#{name.camelize(false)}: DS.attr('#{ember_type}')"
+      "#{name}: DS.attr('#{ember_type}')"
     end
   end
 end

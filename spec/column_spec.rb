@@ -18,7 +18,7 @@ describe "Column" do
     end
   
     it 'to_ember' do
-      column.to_ember.should == "yearPublished: DS.attr('number')"
+      column.to_ember.should == "year_published: DS.attr('number')"
     end
   end
   
