@@ -3,7 +3,7 @@ module EDRA
     include FromHash
     attr_accessor :name, :type
     
-    def to_ember
+    def to_ember(ops={})
       "#{name.to_s.camelize(false)}: DS.#{ember_type}('App.#{name.to_s.camelize}')"
     end
     

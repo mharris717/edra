@@ -20,6 +20,10 @@ describe "Column" do
     it 'to_ember' do
       column.to_ember.should == "year_published: DS.attr('number')"
     end
+    
+    it 'to_ember with camel prop' do
+      column.to_ember(:camel => true).should == "year_published: DS.attr('number'),\n  yearPublished: (function() { return this.get('year_published'); }).property('year_published')"
+    end
   end
   
   describe "type conversion" do

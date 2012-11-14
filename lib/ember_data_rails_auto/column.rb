@@ -21,8 +21,18 @@ module EDRA
       end
     end
     
-    def to_ember
+    def to_ember_attr
       "#{name}: DS.attr('#{ember_type}')"
+    end
+    def to_ember_camel_prop
+      "#{name.to_s.camelize(false)}: (function() { return this.get('#{name}'); }).property('#{name}')"
+    end
+    
+    def to_ember(ops={})
+      res = []
+      res << to_ember_attr
+      res << "  " + to_ember_camel_prop if ops[:camel] && name.to_s != name.to_s.camelize(false)
+      res.join(",\n")
     end
   end
 end

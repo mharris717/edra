@@ -5,8 +5,8 @@ module EDRA
     fattr(:columns) { [] }
     fattr(:associations) { [] }
     
-    def to_ember_model
-      cols = (columns+associations).map { |x| "  #{x.to_ember}" }.join(",\n")
+    def to_ember_model(ops={})
+      cols = (columns+associations).map { |x| "  #{x.to_ember(ops)}" }.join(",\n")
       "App.#{name.camelize} = DS.Model.extend({
 #{cols}
 });"
@@ -17,7 +17,7 @@ module EDRA
     end
     
     def to_ember(ops={})
-      res = to_ember_model
+      res = to_ember_model(ops)
       res += "\n\n#{to_ember_coll}" if ops[:coll]
       res
     end
