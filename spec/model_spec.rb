@@ -15,16 +15,16 @@ describe "Model" do
 
 
     it 'to_ember' do
-      model.to_ember.should == "
-App.Book = DS.Model.extend({
+      model.to_ember.should be_equal_lines("App.Book = DS.Model.extend({
   title: DS.attr('string'),
   author: DS.attr('string'),
   year_published: DS.attr('number')
-});".strip
+});")
     end
     
     it 'to_ember_coll' do
-      model.to_ember_coll.should == "App.books = App.store.findAll(App.Book);"
+      reopen = "App.Book.reopenClass({url: 'book'});"
+      model.to_ember_coll.should be_equal_lines("#{reopen}\nApp.books = App.store.findAll(App.Book);")
     end
   end
   
@@ -47,13 +47,13 @@ App.Book = DS.Model.extend({
 
 
     it 'to_ember' do
-      model.to_ember.should == "
+      model.to_ember.should be_equal_lines("
 App.Book = DS.Model.extend({
   title: DS.attr('string'),
   author_id: DS.attr('number'),
   year_published: DS.attr('number'),
-  author: DS.belongsTo('App.Author')
-});".strip
+  author: DS.belongsTo('App.Author', {})
+});")
     end
   end
 end

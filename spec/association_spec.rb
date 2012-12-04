@@ -8,7 +8,7 @@ describe "Association" do
     end
   
     it 'to_ember' do
-      assoc.to_ember.should == "author: DS.belongsTo('App.Author')"
+      assoc.to_ember.should == "author: DS.belongsTo('App.Author', {})"
     end
   end
   
@@ -18,7 +18,7 @@ describe "Association" do
     end
   
     it 'to_ember' do
-      assoc.to_ember.should == "author: DS.belongsTo('App.Author')"
+      assoc.to_ember.should == "author: DS.belongsTo('App.Author', {})"
     end
   end
   
