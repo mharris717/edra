@@ -10,7 +10,11 @@ module EDRA
       name.camelize
     end
     def coll_name
-      name.camelize(false) + "s"
+      if name == 'category'
+        "categories"
+      else
+        name.camelize(false) + "s"
+      end
     end
     def route_name
       coll_name
@@ -21,7 +25,9 @@ module EDRA
       res << to_ember_model(ops) unless ops[:model] == false
       res << to_ember_coll if ops[:coll]
       res << to_ember_route if ops[:route]
-      res.join("\n\n")
+      res = res.join("\n")
+      res = "window.edra.models.add('#{name}',(function() {\n#{res}\n}));" if ops[:function]
+      res
     end
     
     def from_ar(ar_cls)
@@ -48,27 +54,13 @@ App.#{class_name} = DS.Model.extend({
 
       def to_ember_coll
         "
-App.#{class_name}.reopenClass({url: '#{name}'});
+App.#{class_name}.reopenClass({url: '#{coll_name[0..-2]}'});
 
 App.#{coll_name} = App.store.findAll(App.#{class_name});".strip
       end
 
       def to_ember_route
-        "
-window.rootRoute.reopen({
-  #{route_name}: Ember.Route.extend({
-    route: '/#{route_name}',
-
-    enter: function(router) { 
-      console.debug('enter #{route_name}'); 
-    },
-
-    connectOutlets: function(router) { 
-      console.debug('connectOutlets #{route_name}'); 
-      router.get('applicationController').connectOutlet('#{route_name}',App.#{coll_name})
-    }
-  })
-})".strip
+        Route.new(:model => self).to_ember
       end
     end
     

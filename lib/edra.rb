@@ -11,6 +11,14 @@ class Object
   end
 end
 
-%w(ext model column association).each do |f|
+module EDRA
+  def self.getSetupJs
+    f = File.dirname(__FILE__) + "/edra/setup.js.coffee"
+    coffee = File.read(f)
+    CoffeeScript.compile coffee
+  end
+end
+
+%w(ext model column association route).each do |f|
   load File.expand_path(File.dirname(__FILE__)) + "/edra/#{f}.rb"
 end
